@@ -12,7 +12,6 @@ Philipp Schröer
 #### TODO
 
 * Specify variable capturing semantics of *closures*.
-* Inheriting and overloading of elements bound to types.
 * Type Binding: `protected` qualifier?
 * A qualifier that signals the intended overshadowing of an element in a higher scope by a newly declared element (e.g. `hiding`).
 
@@ -243,44 +242,6 @@ There are a few operators in myx that are predefined for some types and can be d
 
 
 
-## Type Binding
-
-Elements may be *bound* to a type by using `bind`. Every element in its block is added to the namespace of the type, functions become methods (Also see Methods).
-
-    bind Type
-        public val a = 12
-
-        public func add (Int b) -> Int = a + b
-
-In the example above, `a` is an element bound to `Type`. To access `a` you have to write `Type.a`. However, if used inside a binding of the type or with an expression that is expected to yield the type the element is bound to, you do not need to use the full name unless the compiler can not resolve a naming conflict.
-
-It is also allowed to *chain* the binding.
-
-    bind Type1
-        public Type2 = /* ... */
-
-    bind Type1.Type2
-        public val test = 15
-
-`bind` can also be used in another `bind` block.
-
-    bind Type1
-        public Type2 = /* ... */
-        bind Type2
-            val test = 15
-
-`bind` can be used multiple times with the same Type in different files. 
-
-Instead of using `bind`, you may declare and bind an element directly, with the type standing before its name and separated by a dot.
-
-    public Type.a = 12
-    public func Type.add (Int b) -> Int = a + b
-
-Elements bound to a type may be declared `public` or `private`. They are `private` by default. A private element can only be seen by other elements bound to the type or elements bound to a type that derives the type. A public element is always visible.
-
-
-
-
 ## Scopes
 
 The scope of an element is the section of source code where exactly this element is declared. We can likewise define the scope of a section as the set of elements that are declared in this section of code.
@@ -292,7 +253,7 @@ The following table lists the scopes from high to low.
 <table>
 <tr><th>Name</th><th>Element is visible in</th></tr>
 <tr><td>Global scope</td><td>Whole program</td></tr>
-<tr><td>Package scope</td><td><i>internal:</i> Package and sub-packages</td></tr>
+<tr><td>Package/Type scope</td><td><i>internal:</i> Package and sub-packages</td></tr>
 <tr><td>File scope</td><td>Current file</td></tr>
 <tr><td>Local scopes</td><td>Current block and child blocks</td></tr>
 </table>
@@ -339,18 +300,35 @@ To be visible outside the file it is declared in, an element must be a member of
 Elements are internal by default.
 
 
+### Types as Packages
 
+Elements can be put in the namespace and possibly scope (in case of an `internal` declaration) of a type with the same semantics as packages. Only `using` can not be used with types. Elements in the type package can be seen by other elements of the type and sub-types, and methods bound to the type and sub-types.
 
+    package Type
+        visible val a = 12
+
+Instead of using `package`, you may declare and add an element directly to the package, with the type standing before its name and separated by a dot.
+
+    visible val Type.a = 12
 
 
 
 
 ## Methods
 
+A method is a function that is bound to a type. 
 
 
+### Binding
 
+Methods may be *bound* to a type by using `bind`. Every function in its block becomes a method of the type.
 
+    bind Type
+        public func add (Int b) -> Int = a + b
+
+`bind` can be used multiple times with the same type in possibly different files. 
+
+Methods bound to a type may be declared `public` or `private`. They are `private` by default. A private method can only be seen by other methods bound to the type or methods bound to a type that derives the type. A public method is visible in all scopes.
 
 
 
