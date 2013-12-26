@@ -106,11 +106,14 @@ A short notation is available:
 
 	Vector = (Int x, Int y, Int z)
 
-Operators that are defined for **every** individual type in the tuple, are also defined for the tuple itself:
+Accessing a named field can be done by using the dot/access operator.
 
-    Vector a = (5, 5, 5)
-    Vector b = (15, -5, 5)
-    val c = a + b                   // This will yield (20, 0, 10)
+    vec.x
+    vec.y
+
+To access an unnamed (or named) field the subscript operator can be used with an index (starting with 0).
+
+    vec[0]
 
 A tuple has default values for the types that have a specified default value. These can be changed:
 
