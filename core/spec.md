@@ -11,7 +11,6 @@ Philipp Schröer
 
 #### TODO
 
-* Remove References from myx core.
 * Specify variable capturing semantics of *closures*.
 * Inheriting and overloading of elements bound to types.
 * Type Binding: `protected` qualifier?
@@ -136,33 +135,6 @@ A function has one tuple as a parameter and one tuple as a return type. The 0-tu
 Implicit conversions allow us to convert a simple value to a 1-tuple and vice versa, so a function may just take one non-tuple type or return one non-tuple type:
 
     Int x -> Int
-
-
-
-
-## Built-in Types
-
-### References
-
-A reference is a type that points to a mutable variable instead of copying its value. The type it refers to is called *content type*, its value is called *content value*.
-
-    mut Int a
-    
-    /* The following lines do the same. */
-    val ref = Ref (a)
-    Ref ref = a
-    Ref[Int] ref = a
-
-It behaves exactly like its content type with the exception of assignment and passing. Whether the reference or its content value is passed or assigned is inferred:
-
-* If an expression is expected to yield the content value of the reference, or multiple reference layers (e.g. `Ref[Ref[T]]`), the references are resolved until the expected type can be yielded.
-* If a reference to a mutable variable or field is expected and a mutable variable or field is passed, that reference is created implicitly.
-* Otherwise, if a reference is expected and the expression is a reference type, it is simply passed.
-
-A reference's content is always mutable. The variable mutability determines whether a reference can be reassigned. When declaring a new variable for the reference, you can omit the `Ref` constructor.
-    
-    mut Ref ref = a
-	ref = Ref (b)
 
 
 
@@ -323,6 +295,8 @@ The following table lists the scopes from high to low.
 </table>
 
 Some statements and elements have special scoping rules for child members (for example functions with parameter and result tuples).
+
+
 
 
 ## Packages
