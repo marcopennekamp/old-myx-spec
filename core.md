@@ -48,13 +48,13 @@ In the example above, `Id` is a new type, but derives from `Size`. This means it
 
 A type can have a default value, which is used when a value is expected, but none was explicitly supplied, such as it is the case with (mutable) variable declarations and return values.
 
-A type's default value has to be declared explicitly, unless the kind specifies a procedure to generate a default value (e.g. tuples). You can `bind` the default value to the type, its name is always `default`.
+A type's default value has to be declared explicitly, unless the kind specifies a procedure to generate a default value (e.g. tuples). You can add the default value to the type package, its name is always `default`.
 
     Number = { 0..1000 }
-    bind Number
+    package Number
         default = 0
 
-Since default is a reserved name, the variable's type can be inferred by looking at the binding. You can not bind a default value to a 0-tuple type.
+Since default is a reserved variable name in type packages, the variable's type can be inferred. 
 
 
 ### Kinds
@@ -70,7 +70,7 @@ Sets, tuples and functions are the most common *kinds* and defined in the core s
 
 ### Sets
 
-A myx set is a set of values that are optionally labeled with identifiers. Labeling a value is equivalent to binding it to the type.
+A myx set is a set of values that are optionally labeled with identifiers. Labeling a value is equivalent to adding it to the type package.
 
     StackSize = set
         min = 0, 1..19, max = 20
