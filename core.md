@@ -225,7 +225,7 @@ There are a few operators in myx that are predefined for some types and can be d
 A term surrounded by parentheses is treated as a single value, which is calculated before the operator it belongs to is executed. 
 
 <table>
-<tr><th>syntax</th><th>precedence</th><th>associativity</th><th>definition</th><th>return type</th><th>can be redefined</th></tr>
+<tr><th>syntax</th><th>precedence</th><th>associativity</th><th>definition</th><th>return type</th><th>redefined as</th></tr>
 
 <tr><td>x++</td><td>1</td><td>Left</td><td>Returns the l-value x and increments it</td><td>type(x)</td><td><code>`increment`</code></td></tr>
 <tr><td>x--</td><td></td><td></td><td>Returns the l-value x and decrements it</td><td>type(x)</td><td><code>`decrement`</code></td></tr>
