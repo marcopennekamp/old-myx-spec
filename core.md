@@ -41,7 +41,13 @@ A new type can derive from an already existing type.
 
     Id = Size
 
-In the example above, `Id` is a new type, but derives from `Size`. This means it inherits all elements defined for Size, but new elements (for example methods) can be added to the type. The derived type can be converted to the deriving type implicitly (`Size` to `Id`), but not vice versa.
+In the example above, `Id` is a new type, but derives from `Size`. This means it inherits all methods bound to Size and all elements defined in the type package of Size, but new elements (for example methods) can be bound to the type or added to the type package.
+
+This type of derivation is called *primitive*. Kinds can define *custom* derivation policies.
+
+A **primitively** derived type can be reinterpreted as the deriving type implicitly (`Size` to `Id`), but not vice versa. 
+
+We call a type A a *direct* derivative from type B if A is a child of B, otherwise the derivation is *indirect*. In the example above, `Id` is a direct derivative of `Size`.
 
 
 ### Default Value
@@ -151,6 +157,8 @@ A variable declaration in myx has the following form:
 
 In order to make variable declarations distinguishable from variable assignments, at least one qualifier (`Qualifiers`) or `Type` have to be specified. If `Type` is not specified, the type of the variable is inferred.  `Type` may stand before or after the name. The name of the variable is specified by `Name`, it is mandatory and  the first letter must be lower-case. 
 
+A variable which is declared inside a statement block is called a *temporal* variable.
+
 
 ### Mutability
 
@@ -214,6 +222,58 @@ The `while` loop expression executes a block as long as a condition is true.
 
 There are a few operators in myx that are predefined for some types and can be defined for other types (e.g. tuple types). 
 
+A term surrounded by parentheses is treated as a single value, which is calculated before the operator it belongs to is executed. 
+
+<table>
+<tr><th>syntax</th><th>precedence</th><th>associativity</th><th>definition</th><th>return type</th><th>can be redefined</th></tr>
+
+<tr><td>x++</td><td>1</td><td>Left</td><td>Returns the l-value x and increments it</td><td>type(x)</td><td><code>`increment`</code></td></tr>
+<tr><td>x--</td><td></td><td></td><td>Returns the l-value x and decrements it</td><td>type(x)</td><td><code>`decrement`</code></td></tr>
+<tr><td>a[b]</td><td></td><td></td><td>Subscript</td><td>type(e in a)</td><td><code>`subscript`</code></td></tr>
+<tr><td><i>m</i>.<i>n</i></td><td></td><td></td><td>Access</td><td>type(n)</td><td></td></tr>
+<tr><td>f a</td><td></td><td></td><td>Calls the function f with the argument a</td><td>return type(f)</td><td></td></tr>
+
+<tr><td>++x</td><td>2</td><td>Right</td><td>Increments the l-value x and returns it</td><td>type(x)</td><td><code>`increment`</code></td></tr>
+<tr><td>--x</td><td></td><td></td><td>Decrements the l-value x and returns it</td><td>type(x)</td><td><code>`decrement`</code></td></tr>
+<tr><td>-a</td><td></td><td></td><td>Negates a</td><td>type(a)</td><td><code>`negate`</code></td></tr>
+<tr><td>~a</td><td></td><td></td><td>Bitwise complement</td><td>type(a)</td><td><code>`complement`</code></td></tr>
+<tr><td>!a</td><td></td><td></td><td>Logical not</td><td>Bool</td><td><code>`not`</code></td></tr>
+
+<tr><td>a ** b</td><td>3</td><td>Left</td><td>a to the power of b</td><td>type(a)</td><td><code>`power`</code></td></tr>
+
+<tr><td>a * b</td><td>4</td><td>Left</td><td>Multiplication of a by b</td><td>type(a) or type(b)</td><td><code>`multiply`</code></td></tr>
+<tr><td>a / b</td><td></td><td></td><td>Division of a by b</td><td>type(a) or type(b)</td><td><code>`divide`</code></td></tr>
+<tr><td>a % b</td><td></td><td></td><td>Remainder of a divided by b</td><td>type(a) or type(b)</td><td><code>`modulo`</code></td></tr>
+
+<tr><td>a + b</td><td>5</td><td>Left</td><td>Addition of a and b</td><td>type(a) or type(b)</td><td><code>`add`</code></td></tr>
+<tr><td>a - b</td><td></td><td></td><td>Subtraction of a by b</td><td>type(a) or type(b)</td><td><code>`subtract`</code></td></tr>
+
+<tr><td>a &lt;&lt; b</td><td>6</td><td>Left</td><td>Shift left a by b</td><td>type(a)</td><td><code>`shift left`</code></td></tr>
+<tr><td>a &gt;&gt; b</td><td></td><td></td><td>Shift right a by b</td><td>type(a)</td><td><code>`shift right`</code></td></tr>
+
+<tr><td>a == b</td><td>7</td><td>None</td><td>a and b are equal</td><td>Bool</td><td><code>`equals`</code></td></tr>
+<tr><td>a != b</td><td></td><td></td><td>a and b are not equal</td><td>Bool</td><td>defined as <code>not (a == b)</code></td></tr>
+<tr><td>a &lt; b</td><td></td><td></td><td>a is less than b</td><td>Bool</td><td><code>`less than`</code></td></tr>
+<tr><td>a &gt; b</td><td></td><td></td><td>a is greater than b</td><td>Bool</td><td><code>`greater than`</code></td></tr>
+<tr><td>a &lt;= b</td><td></td><td></td><td>a is less than or equal b</td><td>Bool</td><td>defined as <code>not (a > b)</code></td></tr>
+<tr><td>a &gt;= b</td><td></td><td></td><td>a is greater than or equal b</td><td>Bool</td><td>defined as <code>not (a < b)</code></td></tr>
+<tr><td>a is T</td><td></td><td></td><td>a is of type T</td><td>Bool</td><td></td></tr>
+<tr><td>a as T</td><td></td><td></td><td>Reinterpretation of a as T</td><td>T</td><td></td></tr>
+<tr><td>a to T</td><td></td><td></td><td>Conversion of a to T</td><td>T</td><td></td></tr>
+
+<tr><td>a and b</td><td>8</td><td>Left</td><td>Logical and</td><td>Bool</td><td></td></tr>
+<tr><td>a or b</td><td>9</td><td>Left</td><td>Logical or</td><td>Bool</td><td></td></tr>
+<tr><td>a xor b</td><td>10</td><td>Left</td><td>Logical xor</td><td>Bool</td><td></td></tr>
+
+<tr><td>a & b</td><td>11</td><td>Left</td><td>Bitwise and</td><td>type(a) or type(b)</td><td><code>`bitwise and`</code></td></tr>
+<tr><td>a | b</td><td>12</td><td>Left</td><td>Bitwise or</td><td>type(a) or type(b)</td><td><code>`bitwise or`</code></td></tr>
+<tr><td>a ^ b</td><td>13</td><td>Left</td><td>Bitwise xor</td><td>type(a) or type(b)</td><td><code>`bitwise xor`</code></td></tr>
+
+<tr><td>a..b</td><td>14</td><td>Left</td><td>Adds each value in a to b as an individual value to a list or set/enumeration</td><td>Each element: type(a) and type(b)</td><td></td></tr>
+
+<tr><td>x = a</td><td>15</td><td>Right</td><td>Assignment</td><td>type(a)</td><td></td></tr>
+</table>
+
 
 
 
@@ -233,6 +293,38 @@ There are a few operators in myx that are predefined for some types and can be d
 
     Int a = 0
     assert a == 0 
+
+
+
+
+## Type Conversions
+
+Type conversions change the type of a value and the value itself from a source type to a destination type. 
+
+
+### Explicit Conversions
+
+The `to` operator can be used to convert a type A to a type B when the conversion method with the type `-> B` is bound to type A.
+
+
+### Implicit Conversions
+
+Implicit type conversions convert a value of a type to the type that is expected by an expression without the need to explicitly state the type to convert to or the intent for conversion. All conversion methods qualified with `implicit` allow an implicit conversion. Note that an implicit conversion should be intuitive in order to justify the sacrificed safety a strong typing system provides.
+
+
+
+
+## Type Reinterpretations
+
+Type reinterpretations change the type of a value, but not the underlying data. The `as` operator is used to reinterpret type A as type B. Type A must be a direct or indirect derivative of type B in order to be interpreted as type B, or type A must implement the interface B, if B is an interface.
+
+    Car = /* ... */
+    Bmw = Car
+
+    Bmw bmw = /* ... */
+    val car = bmw as Car
+
+Primitively derived types are implicitly reinterpreted as the derivative type if appropriate.
 
 
 
@@ -323,8 +415,9 @@ A method is a function that is bound to a type.
 
 Methods may be *bound* to a type by using `bind`. Every function in its block becomes a method of the type.
 
-    bind Type
-        public func add (Int b) -> Int = a + b
+    bind Car
+        public mod move (Int value) = 
+            x += value
 
 `bind` can be used multiple times with the same type in possibly different files. 
 
