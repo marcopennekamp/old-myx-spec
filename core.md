@@ -227,36 +227,36 @@ A term surrounded by parentheses is treated as a single value, which is calculat
 <table>
 <tr><th>syntax</th><th>precedence</th><th>associativity</th><th>definition</th><th>return type</th><th>redefined as</th></tr>
 
-<tr><td>x++</td><td>1</td><td>Left</td><td>Returns the l-value x and increments it</td><td>type(x)</td><td><code>`increment`</code></td></tr>
-<tr><td>x--</td><td></td><td></td><td>Returns the l-value x and decrements it</td><td>type(x)</td><td><code>`decrement`</code></td></tr>
-<tr><td>a[b]</td><td></td><td></td><td>Subscript</td><td>type(e in a)</td><td><code>`subscript`</code></td></tr>
+<tr><td>x++</td><td>1</td><td>Left</td><td>Returns the l-value x and increments it</td><td>type(x)</td><td><code>`++`</code></td></tr>
+<tr><td>x--</td><td></td><td></td><td>Returns the l-value x and decrements it</td><td>type(x)</td><td><code>`--`</code></td></tr>
+<tr><td>a[b]</td><td></td><td></td><td>Subscript</td><td>type(e in a)</td><td><code>`[]`</code></td></tr>
 <tr><td><i>m</i>.<i>n</i></td><td></td><td></td><td>Access</td><td>type(n)</td><td></td></tr>
 <tr><td>f a</td><td></td><td></td><td>Calls the function f with the argument a</td><td>return type(f)</td><td></td></tr>
 
-<tr><td>++x</td><td>2</td><td>Right</td><td>Increments the l-value x and returns it</td><td>type(x)</td><td><code>`increment`</code></td></tr>
-<tr><td>--x</td><td></td><td></td><td>Decrements the l-value x and returns it</td><td>type(x)</td><td><code>`decrement`</code></td></tr>
-<tr><td>-a</td><td></td><td></td><td>Negates a</td><td>type(a)</td><td><code>`negate`</code></td></tr>
-<tr><td>~a</td><td></td><td></td><td>Bitwise complement</td><td>type(a)</td><td><code>`complement`</code></td></tr>
-<tr><td>!a</td><td></td><td></td><td>Logical not</td><td>Bool</td><td><code>`not`</code></td></tr>
+<tr><td>++x</td><td>2</td><td>Right</td><td>Increments the l-value x and returns it</td><td>type(x)</td><td><code>`++`</code></td></tr>
+<tr><td>--x</td><td></td><td></td><td>Decrements the l-value x and returns it</td><td>type(x)</td><td><code>`--`</code></td></tr>
+<tr><td>-a</td><td></td><td></td><td>Negates a</td><td>type(a)</td><td><code>`neg`</code></td></tr>
+<tr><td>~a</td><td></td><td></td><td>Bitwise complement</td><td>type(a)</td><td><code>`~`</code></td></tr>
+<tr><td>!a</td><td></td><td></td><td>Logical not</td><td>Bool</td><td><code>`!`</code></td></tr>
 
-<tr><td>a ** b</td><td>3</td><td>Left</td><td>a to the power of b</td><td>type(a)</td><td><code>`power`</code></td></tr>
+<tr><td>a ** b</td><td>3</td><td>Left</td><td>a to the power of b</td><td>type(a)</td><td><code>`**`</code></td></tr>
 
-<tr><td>a * b</td><td>4</td><td>Left</td><td>Multiplication of a by b</td><td>type(a) or type(b)</td><td><code>`multiply`</code></td></tr>
-<tr><td>a / b</td><td></td><td></td><td>Division of a by b</td><td>type(a) or type(b)</td><td><code>`divide`</code></td></tr>
-<tr><td>a % b</td><td></td><td></td><td>Remainder of a divided by b</td><td>type(a) or type(b)</td><td><code>`modulo`</code></td></tr>
+<tr><td>a * b</td><td>4</td><td>Left</td><td>Multiplication of a by b</td><td>type(a) or type(b)</td><td><code>`*`</code></td></tr>
+<tr><td>a / b</td><td></td><td></td><td>Division of a by b</td><td>type(a) or type(b)</td><td><code>`/`</code></td></tr>
+<tr><td>a % b</td><td></td><td></td><td>Remainder of a divided by b</td><td>type(a) or type(b)</td><td><code>`%`</code></td></tr>
 
-<tr><td>a + b</td><td>5</td><td>Left</td><td>Addition of a and b</td><td>type(a) or type(b)</td><td><code>`add`</code></td></tr>
-<tr><td>a - b</td><td></td><td></td><td>Subtraction of a by b</td><td>type(a) or type(b)</td><td><code>`subtract`</code></td></tr>
+<tr><td>a + b</td><td>5</td><td>Left</td><td>Addition of a and b</td><td>type(a) or type(b)</td><td><code>`+`</code></td></tr>
+<tr><td>a - b</td><td></td><td></td><td>Subtraction of a by b</td><td>type(a) or type(b)</td><td><code>`-`</code></td></tr>
 
-<tr><td>a &lt;&lt; b</td><td>6</td><td>Left</td><td>Shift left a by b</td><td>type(a)</td><td><code>`shift left`</code></td></tr>
-<tr><td>a &gt;&gt; b</td><td></td><td></td><td>Shift right a by b</td><td>type(a)</td><td><code>`shift right`</code></td></tr>
+<tr><td>a &lt;&lt; b</td><td>6</td><td>Left</td><td>Shift left a by b</td><td>type(a)</td><td><code>`&lt;&lt;`</code></td></tr>
+<tr><td>a &gt;&gt; b</td><td></td><td></td><td>Shift right a by b</td><td>type(a)</td><td><code>`&gt;&gt;`</code></td></tr>
 
-<tr><td>a == b</td><td>7</td><td>None</td><td>a and b are equal</td><td>Bool</td><td><code>`equals`</code></td></tr>
-<tr><td>a != b</td><td></td><td></td><td>a and b are not equal</td><td>Bool</td><td>defined as <code>not (a == b)</code></td></tr>
-<tr><td>a &lt; b</td><td></td><td></td><td>a is less than b</td><td>Bool</td><td><code>`less than`</code></td></tr>
-<tr><td>a &gt; b</td><td></td><td></td><td>a is greater than b</td><td>Bool</td><td><code>`greater than`</code></td></tr>
-<tr><td>a &lt;= b</td><td></td><td></td><td>a is less than or equal b</td><td>Bool</td><td>defined as <code>not (a > b)</code></td></tr>
-<tr><td>a &gt;= b</td><td></td><td></td><td>a is greater than or equal b</td><td>Bool</td><td>defined as <code>not (a < b)</code></td></tr>
+<tr><td>a == b</td><td>7</td><td>None</td><td>a and b are equal</td><td>Bool</td><td><code>`==`</code></td></tr>
+<tr><td>a != b</td><td></td><td></td><td>a and b are not equal</td><td>Bool</td><td>defined as <code>!(a == b)</code></td></tr>
+<tr><td>a &lt; b</td><td></td><td></td><td>a is less than b</td><td>Bool</td><td><code>`&lt;`</code></td></tr>
+<tr><td>a &gt; b</td><td></td><td></td><td>a is greater than b</td><td>Bool</td><td><code>`&gt;`</code></td></tr>
+<tr><td>a &lt;= b</td><td></td><td></td><td>a is less than or equal b</td><td>Bool</td><td>defined as <code>!(a &gt; b)</code></td></tr>
+<tr><td>a &gt;= b</td><td></td><td></td><td>a is greater than or equal b</td><td>Bool</td><td>defined as <code>!(a &lt; b)</code></td></tr>
 <tr><td>a is T</td><td></td><td></td><td>a is of type T</td><td>Bool</td><td></td></tr>
 <tr><td>a as T</td><td></td><td></td><td>Reinterpretation of a as T</td><td>T</td><td></td></tr>
 <tr><td>a to T</td><td></td><td></td><td>Conversion of a to T</td><td>T</td><td></td></tr>
@@ -265,9 +265,9 @@ A term surrounded by parentheses is treated as a single value, which is calculat
 <tr><td>a or b</td><td>9</td><td>Left</td><td>Logical or</td><td>Bool</td><td></td></tr>
 <tr><td>a xor b</td><td>10</td><td>Left</td><td>Logical xor</td><td>Bool</td><td></td></tr>
 
-<tr><td>a & b</td><td>11</td><td>Left</td><td>Bitwise and</td><td>type(a) or type(b)</td><td><code>`bitwise and`</code></td></tr>
-<tr><td>a | b</td><td>12</td><td>Left</td><td>Bitwise or</td><td>type(a) or type(b)</td><td><code>`bitwise or`</code></td></tr>
-<tr><td>a ^ b</td><td>13</td><td>Left</td><td>Bitwise xor</td><td>type(a) or type(b)</td><td><code>`bitwise xor`</code></td></tr>
+<tr><td>a & b</td><td>11</td><td>Left</td><td>Bitwise and</td><td>type(a) or type(b)</td><td><code>`&`</code></td></tr>
+<tr><td>a | b</td><td>12</td><td>Left</td><td>Bitwise or</td><td>type(a) or type(b)</td><td><code>`|`</code></td></tr>
+<tr><td>a ^ b</td><td>13</td><td>Left</td><td>Bitwise xor</td><td>type(a) or type(b)</td><td><code>`^`</code></td></tr>
 
 <tr><td>a..b</td><td>14</td><td>Left</td><td>Adds each value in a to b as an individual value to a list or set/enumeration</td><td>Each element: type(a) and type(b)</td><td></td></tr>
 
