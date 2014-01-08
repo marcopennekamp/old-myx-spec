@@ -14,6 +14,7 @@ Philipp Schröer
 * Specify variable capturing semantics of *closures*.
 * Type Binding: `protected` qualifier?
 * A qualifier that signals the intended overshadowing of an element in a higher scope by a newly declared element (e.g. `hiding`).
+* Operators: `neg` for `-a` is inconsistent.
 
 
 --------------------------------
